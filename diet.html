@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ranger Fuel Protocol</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1109;
+  --surface: #181c10;
+  --panel: #1e2416;
+  --border: #2e3828;
+  --olive: #4a5c30;
+  --olive-light: #7a9050;
+  --tan: #c4a96b;
+  --amber: #d4820a;
+  --amber-dim: rgba(212,130,10,0.12);
+  --rust: #a03820;
+  --cream: #e8dfc0;
+  --muted: #6a7860;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--cream);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden;cursor:crosshair;}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:1000;}
+.page{max-width:960px;margin:0 auto;padding:48px 24px 80px;position:relative;}
+
+.header{margin-bottom:40px;position:relative;padding-bottom:28px;animation:fadeUp 0.5s ease both;}
+.header::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,var(--amber),var(--olive),transparent);}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;}
+.header-meta{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;line-height:1.8;}
+.header-meta .h{color:var(--amber);}
+.title-block h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,12vw,110px);line-height:0.85;letter-spacing:2px;color:var(--cream);}
+.title-block h1 em{color:var(--amber);font-style:normal;display:block;text-shadow:0 0 40px rgba(212,130,10,0.4);}
+.title-block p{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:3px;margin-top:10px;}
+
+.targets{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:40px;border:1px solid var(--border);overflow:hidden;border-radius:3px;animation:fadeUp 0.5s ease 0.1s both;}
+.target-cell{background:var(--panel);padding:20px 16px;text-align:center;position:relative;overflow:hidden;transition:background 0.2s;}
+.target-cell:hover{background:#242c18;}
+.target-cell::before{content:attr(data-label);position:absolute;top:8px;left:0;right:0;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-align:center;}
+.target-cell:first-child{border-right:2px solid var(--amber);}
+.target-val{font-family:'Bebas Neue',sans-serif;font-size:52px;line-height:1;color:var(--tan);margin-top:14px;}
+.target-cell:first-child .target-val{color:var(--amber);font-size:46px;}
+.target-unit{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;}
+
+.section-label{display:flex;align-items:center;gap:12px;margin-bottom:16px;margin-top:36px;}
+.section-label span{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.meals-stack{display:flex;flex-direction:column;gap:3px;}
+.meal{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--olive);border-radius:2px;overflow:hidden;transition:border-color 0.2s,box-shadow 0.2s;animation:fadeUp 0.4s ease both;}
+.meal:hover{border-left-color:var(--amber);box-shadow:0 0 0 1px rgba(212,130,10,0.1),inset 0 0 40px rgba(212,130,10,0.03);}
+.meal.hero{border-left-color:var(--amber);background:#1c200f;box-shadow:0 0 30px rgba(212,130,10,0.05);}
+.meal.optional{border-left-color:var(--border);opacity:0.75;}
+.meal:nth-child(1){animation-delay:0.05s}
+.meal:nth-child(2){animation-delay:0.10s}
+.meal:nth-child(3){animation-delay:0.15s}
+.meal:nth-child(4){animation-delay:0.20s}
+.meal:nth-child(5){animation-delay:0.25s}
+.meal:nth-child(6){animation-delay:0.30s}
+.meal:nth-child(7){animation-delay:0.35s}
+
+.meal-header{display:grid;grid-template-columns:96px 1fr auto;align-items:center;gap:16px;padding:14px 18px;cursor:pointer;user-select:none;}
+.meal-time{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--tan);line-height:1;letter-spacing:1px;}
+.meal.hero .meal-time{color:var(--amber);font-size:30px;}
+.meal.optional .meal-time{color:var(--muted);}
+.meal-center{min-width:0;}
+.meal-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;color:var(--cream);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.hero-badge{font-family:'Share Tech Mono',monospace;font-size:9px;background:var(--amber);color:var(--bg);padding:2px 7px;border-radius:1px;letter-spacing:1px;font-weight:700;}
+.opt-badge{font-family:'Share Tech Mono',monospace;font-size:9px;background:transparent;color:var(--muted);border:1px solid var(--border);padding:2px 7px;border-radius:1px;letter-spacing:1px;}
+.meal-macros-inline{display:flex;gap:10px;margin-top:4px;flex-wrap:wrap;}
+.macro-tag{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.5px;}
+.macro-tag.cal{color:var(--amber);font-weight:700;}
+.meal-toggle{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:2px;flex-shrink:0;transition:all 0.2s;}
+.meal:hover .meal-toggle{border-color:var(--amber);background:var(--amber-dim);}
+.meal-toggle svg{transition:transform 0.25s ease;color:var(--muted);}
+.meal.open .meal-toggle svg{transform:rotate(180deg);}
+.meal.open .meal-toggle{border-color:var(--amber);}
+
+.meal-body{max-height:0;overflow:hidden;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1);}
+.meal.open .meal-body{max-height:700px;}
+.meal-body-inner{padding:0 18px 18px;border-top:1px solid var(--border);padding-top:16px;}
+
+.food-section-label{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--muted);margin-bottom:10px;}
+.food-categories{display:flex;flex-direction:column;gap:14px;}
+.food-cat-name{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--olive-light);letter-spacing:2px;margin-bottom:6px;text-transform:uppercase;}
+.food-pills{display:flex;flex-wrap:wrap;gap:5px;}
+.food-pill{font-size:12px;font-weight:500;color:var(--cream);background:var(--panel);border:1px solid var(--border);border-radius:2px;padding:4px 11px;cursor:default;transition:all 0.15s;letter-spacing:0.3px;}
+.food-pill:hover{background:rgba(212,130,10,0.1);border-color:var(--amber);color:var(--amber);transform:translateY(-1px);}
+.meal-note-bar{margin-top:14px;padding:8px 12px;background:rgba(212,130,10,0.07);border-left:2px solid var(--amber);font-size:12px;color:var(--tan);font-style:italic;letter-spacing:0.3px;}
+
+.macro-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:2px;}
+.bar-label{display:flex;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:4px;}
+.bar-label span:last-child{color:var(--tan);}
+.bar-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:2px;width:0;}
+.bar-fill.protein{background:var(--amber);}
+.bar-fill.carbs{background:var(--olive-light);}
+.bar-fill.fat{background:#7a6030;}
+
+.golden-rule{margin-top:36px;background:var(--panel);border:1px solid var(--olive);border-radius:3px;padding:24px 28px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;position:relative;overflow:hidden;}
+.golden-rule::before{content:'MISSION-CRITICAL';position:absolute;top:10px;right:16px;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--border);}
+.rule-icon-box{width:56px;height:56px;background:var(--amber-dim);border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:26px;border-radius:2px;flex-shrink:0;}
+.rule-title{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--amber);margin-bottom:8px;}
+.rule-text{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;color:var(--cream);line-height:1.2;}
+.rule-text em{color:var(--amber);font-style:normal;}
+
+.timeline-section{margin-top:32px;background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:20px 24px;}
+.timeline-title{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:18px;}
+.tl{display:flex;gap:0;align-items:flex-start;overflow-x:auto;padding-bottom:4px;}
+.tl-node{flex:1;min-width:72px;display:flex;flex-direction:column;align-items:center;position:relative;}
+.tl-node:not(:last-child)::after{content:'';position:absolute;top:11px;left:50%;right:-50%;height:1px;background:linear-gradient(90deg,var(--olive),var(--border));z-index:0;}
+.tl-dot{width:22px;height:22px;border-radius:50%;background:var(--surface);border:2px solid var(--olive);z-index:1;margin-bottom:10px;transition:all 0.2s;cursor:pointer;}
+.tl-node:hover .tl-dot{border-color:var(--amber);background:var(--amber-dim);transform:scale(1.15);}
+.tl-node.big .tl-dot{background:var(--amber);border-color:var(--amber);box-shadow:0 0 12px rgba(212,130,10,0.5);}
+.tl-node.opt .tl-dot{border-style:dashed;border-color:var(--border);}
+.tl-time{font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--tan);letter-spacing:1px;text-align:center;}
+.tl-node.big .tl-time{color:var(--amber);}
+.tl-node.opt .tl-time{color:var(--muted);}
+.tl-label{font-size:9px;font-weight:600;color:var(--muted);letter-spacing:0.5px;text-align:center;text-transform:uppercase;margin-top:3px;line-height:1.3;}
+
+.footer{margin-top:40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:20px;border-top:1px solid var(--border);}
+.footer-note{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;}
+.footer-note em{color:var(--tan);font-style:normal;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:580px){
+  .targets{grid-template-columns:repeat(2,1fr);}
+  .meal-header{grid-template-columns:74px 1fr 28px;gap:10px;}
+  .macro-bars{grid-template-columns:1fr;}
+  .golden-rule{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="header-top">
+      <div class="title-block">
+        <h1>RANGER<em>FUEL</em></h1>
+        <p>// NUTRITION PROTOCOL · PREP PHASE</p>
+      </div>
+      <div class="header-meta">
+        AGE &nbsp;· <span class="h">18</span><br>
+        HT &nbsp;&nbsp;· <span class="h">6'1"</span><br>
+        WT &nbsp;&nbsp;· <span class="h">180 LBS</span><br>
+        SEX · <span class="h">MALE</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="targets">
+    <div class="target-cell" data-label="DAILY CALORIES"><div class="target-val">3000</div><div class="target-unit">KCAL</div></div>
+    <div class="target-cell" data-label="PROTEIN"><div class="target-val">160</div><div class="target-unit">GRAMS</div></div>
+    <div class="target-cell" data-label="CARBOHYDRATES"><div class="target-val">380</div><div class="target-unit">GRAMS</div></div>
+    <div class="target-cell" data-label="FAT"><div class="target-val">80</div><div class="target-unit">GRAMS</div></div>
+  </div>
+
+  <div class="section-label"><span>Meal Schedule — Click any meal to expand</span></div>
+  <div class="meals-stack" id="meals"></div>
+
+  <div class="golden-rule">
+    <div class="rule-icon-box">🎯</div>
+    <div>
+      <div class="rule-title">THE ONE RULE THAT COVERS EVERYTHING</div>
+      <div class="rule-text"><em>Carbs before and after training.</em> Protein at every meal.</div>
+    </div>
+  </div>
+
+  <div class="timeline-section">
+    <div class="timeline-title">// DAY AT A GLANCE</div>
+    <div class="tl">
+      <div class="tl-node"><div class="tl-dot"></div><div class="tl-time">6AM</div><div class="tl-label">Breakfast</div></div>
+      <div class="tl-node"><div class="tl-dot"></div><div class="tl-time">9AM</div><div class="tl-label">Snack</div></div>
+      <div class="tl-node"><div class="tl-dot"></div><div class="tl-time">11AM</div><div class="tl-label">Pre-WO</div></div>
+      <div class="tl-node big"><div class="tl-dot"></div><div class="tl-time">1PM</div><div class="tl-label">Big Lunch</div></div>
+      <div class="tl-node"><div class="tl-dot"></div><div class="tl-time">3:30PM</div><div class="tl-label">Snack</div></div>
+      <div class="tl-node"><div class="tl-dot"></div><div class="tl-time">7PM</div><div class="tl-label">Dinner</div></div>
+      <div class="tl-node opt"><div class="tl-dot"></div><div class="tl-time">8:30PM</div><div class="tl-label">Recovery</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-note">Close is good enough — <em>consistency beats perfection.</em></div>
+    <div class="footer-note">Click any meal card to expand ↑</div>
+  </div>
+</div>
+
+<script>
+const meals = [
+  {
+    time:"6:00 AM", name:"Breakfast", cal:700, protein:35, carbs:90, fat:20,
+    note:"Fuel up for school and the morning — don't skip this one.",
+    categories:[
+      {name:"PROTEIN",foods:["Scrambled eggs (3)","Fried eggs","Hard boiled eggs (3)","Greek yogurt (full fat)","Cottage cheese","Turkey sausage links","Canadian bacon","Egg whites + 1 whole egg","Smoked salmon","Protein powder mixed in oats","Low-fat cheese omelette"]},
+      {name:"CARBS",foods:["Oatmeal (1.5 cups)","Whole wheat toast (2 slices)","Bagel (whole)","Cream of Wheat","Whole grain waffles","English muffin","Sweet potato hash","Cream of Rice","Overnight oats","Sourdough toast","Pancakes (2 small)"]},
+      {name:"FAT / EXTRAS",foods:["Whole milk (1 cup)","Avocado (half)","Peanut butter (1 tbsp)","Almond butter","Cheese slice","Olive oil drizzle","Butter on toast","Mixed nuts (small handful)"]},
+      {name:"FRUIT",foods:["Banana","Blueberries","Strawberries","Orange","Apple","Mango chunks","Watermelon","Grapes","Raspberries","Pineapple chunks"]}
+    ]
+  },
+  {
+    time:"9:00 AM", name:"School Snack", cal:250, protein:10, carbs:40, fat:5,
+    note:"Pack something easy — no prep needed at school. Bag it the night before.",
+    categories:[
+      {name:"QUICK GRAB (no prep)",foods:["Granola bar","Protein bar (low-cal)","Banana","Apple","Clementines (2)","Trail mix (small bag)","Fig bars","Dates","Dried mango strips","Rice cakes (plain)"]},
+      {name:"PACK AHEAD",foods:["PB sandwich (half)","Yogurt cup","String cheese + crackers","Rice cakes + almond butter packet","Hard boiled egg + piece of fruit","Hummus + pita strips","Turkey + cheese roll-up","Mini bagel + cream cheese"]},
+      {name:"DRINK OPTIONS",foods:["Chocolate milk carton","Light protein shake","Orange juice (small)","Regular milk carton","Coconut water"]}
+    ]
+  },
+  {
+    time:"11:00 AM", name:"Pre-Workout Fuel", cal:350, protein:20, carbs:55, fat:7,
+    note:"Light and carb-focused. Eat 30–60 min before training. Don't go in on an empty stomach.",
+    categories:[
+      {name:"CARB BASE",foods:["Bagel (whole)","2 slices toast","Banana + instant oats","Rice cakes (3–4)","English muffin","Flour tortilla wrap","Bowl of cereal (lower sugar)","Instant oatmeal packet","Crackers (10–12)","Sourdough slice","Pita bread"]},
+      {name:"PROTEIN PAIRING",foods:["Turkey deli slices","2 whole eggs","Deli chicken breast","Half scoop protein shake","Low-fat Greek yogurt","Tuna pouch","String cheese","Cottage cheese (small)","Deli ham"]},
+      {name:"FAST ENERGY BOOST",foods:["Drizzle of honey","Jam on toast","Sports drink (half)","Banana (extra)","Gummy bears (small handful)","Raisins","Dates (2)","Applesauce pouch"]}
+    ]
+  },
+  {
+    time:"1:00 PM", name:"Post-Workout Lunch", cal:900, protein:50, carbs:120, fat:25,
+    hero:true,
+    note:"Most important meal of the day. Eat aggressively here — this is how you recover, rebuild, and grow. Don't short yourself.",
+    categories:[
+      {name:"PROTEIN ANCHOR — pick 1 (6–8 oz)",foods:["Grilled chicken breast","Ground beef 85/15","Flank steak","Salmon fillet","Tuna steak","Pork tenderloin","Shrimp (large portion)","Canned tuna (large, 2 cans)","Rotisserie chicken","Turkey breast","4–5 whole eggs","Tilapia","Ground turkey","Pork shoulder","Chuck roast (shredded)","Beef mince + sauce","Mahi-mahi"]},
+      {name:"CARB BASE — go big",foods:["White rice (2 cups cooked)","Brown rice (2 cups)","Pasta (2 cups cooked)","Mashed potatoes (large)","Baked potato (large)","Sweet potato (large)","Large burrito tortilla","Quinoa (2 cups)","Couscous","Sourdough bread (2 thick slices)","Mac & cheese (homemade)","Fried rice","Noodles (lo mein/udon)","Corn tortillas (4–5)","Polenta"]},
+      {name:"MEAL COMBOS (ideas)",foods:["Chicken + white rice + broccoli","Burrito bowl (chicken/steak)","Steak + mashed potato + salad","Salmon + rice + green beans","Pasta bolognese (ground beef)","Turkey rice bowl","Tuna fried rice","Chicken quesadilla + beans","Beef stir fry + noodles","Pork loin + roasted potato","Shrimp tacos + rice","Chicken gyro + pita + tzatziki","BBQ pulled pork + rice","Salmon sushi bowl","Cheesesteak + fries (occasional)"]},
+      {name:"VEGETABLES / SIDES",foods:["Broccoli (steamed/roasted)","Green beans","Roasted zucchini","Corn (whole ear)","Mixed green salad","Peas","Edamame","Sautéed spinach","Bell peppers","Roasted carrots","Cucumber + tomato salad","Coleslaw","Roasted asparagus"]},
+      {name:"FAT / EXTRAS",foods:["Olive oil on veg","Shredded cheese","Sour cream","Avocado / guacamole","Butter on potato","Nuts (sprinkled)","Mayo in wrap","Tahini drizzle","Sesame oil (stir fry)"]}
+    ]
+  },
+  {
+    time:"3:30 PM", name:"Pre-Work Snack", cal:350, protein:25, carbs:40, fat:10,
+    note:"Bridge between lunch and dinner. Keep protein high — you're coming off work or about to go in.",
+    categories:[
+      {name:"HIGH PROTEIN BASE",foods:["Greek yogurt full fat (1 cup)","Cottage cheese + fruit","Protein shake (1 scoop)","Tuna pouch + crackers","Hard boiled eggs (2–3)","Beef jerky + banana","String cheese (2) + apple","Turkey roll-ups","Deli chicken + cheese slice","Edamame (1 cup)","Canned salmon + crackers"]},
+      {name:"CARB ADD-ONS",foods:["Granola (sprinkled)","Banana","Apple","Crackers (10)","Rice cakes (2–3)","Pretzels (small bag)","Oatmeal cookie","Dried mango","Pita chips","Raisins","Fig bars"]},
+      {name:"COMBO MEALS",foods:["PB + banana wrap","Nut butter + rice cakes","Yogurt parfait (granola + berries)","Hummus + veggie sticks + pita","Protein shake + granola bar","Cottage cheese + pineapple + crackers","Tuna melt on English muffin","Apple + almond butter + string cheese"]}
+    ]
+  },
+  {
+    time:"7:00 PM", name:"Dinner", cal:700, protein:35, carbs:80, fat:15,
+    note:"Solid, balanced meal. Wind down the eating day. Lighter than lunch but still filling.",
+    categories:[
+      {name:"PROTEIN ANCHOR",foods:["Chicken thighs (skin-on)","Grilled chicken breast","Salmon fillet","Ground beef patty","Pork chops","Shrimp (sautéed)","Tilapia","Turkey meatballs","Sausage links","Lamb chops","Sirloin steak (smaller)","Canned sardines + toast","3–4 whole eggs","Cod fillet","Crab legs (occasional)","Pork belly strips"]},
+      {name:"CARB BASE",foods:["White rice","Brown rice","Pasta (1.5 cups cooked)","Roasted potatoes","Mashed potatoes","Dinner rolls (2)","Pita bread","Couscous","Corn tortillas (3)","Lentils + rice","Naan bread","Gnocchi","Farro"]},
+      {name:"DINNER IDEAS",foods:["Chicken thighs + rice + roasted veg","Salmon + roasted potatoes + asparagus","Pasta + ground beef marinara","Beef + veggie stir fry + noodles","Tacos (3 corn tortilla)","Chicken noodle soup + bread","Pork fried rice","Turkey meatballs + pasta","Sheet pan chicken + potatoes","Fish tacos + rice","Lamb chops + couscous","Shrimp + grits","Stuffed bell peppers","Chicken fajitas + tortillas","Sausage + potato hash"]},
+      {name:"VEGETABLES",foods:["Broccoli (roasted)","Asparagus","Brussels sprouts","Side salad (dressed)","Sautéed spinach + garlic","Green beans (butter)","Roasted zucchini","Mixed stir-fry veg","Corn on cob","Baked tomatoes","Cucumber salad","Roasted cauliflower"]}
+    ]
+  },
+  {
+    time:"8:30 PM", name:"Recovery Snack", cal:150, protein:20, carbs:10, fat:3,
+    optional:true,
+    note:"Optional but smart on hard training days. Slow-digesting protein feeds muscles overnight.",
+    categories:[
+      {name:"BEST OPTIONS",foods:["Cottage cheese (1 cup)","Greek yogurt (plain, low fat)","Glass of whole milk (1 cup)","Casein protein shake","Low-fat yogurt + honey drizzle","Skyr (Icelandic yogurt)","String cheese + small glass milk"]},
+      {name:"LIGHT ADD-ONS",foods:["Small handful of berries","Drizzle of honey","Cinnamon (sprinkle)","Half a banana","Chia seeds (sprinkle)","Cocoa powder in yogurt (sugar-free)"]}
+    ]
+  }
+];
+
+const container = document.getElementById('meals');
+const pMax=160, cMax=380, fMax=80;
+
+meals.forEach(meal => {
+  const el = document.createElement('div');
+  el.className = `meal${meal.hero?' hero':''}${meal.optional?' optional':''}`;
+
+  const cats = meal.categories.map(cat=>`
+    <div class="food-category">
+      <div class="food-cat-name">${cat.name}</div>
+      <div class="food-pills">${cat.foods.map(f=>`<div class="food-pill">${f}</div>`).join('')}</div>
+    </div>`).join('');
+
+  el.innerHTML = `
+    <div class="meal-header" onclick="this.closest('.meal').classList.toggle('open');animateBars(this.closest('.meal'))">
+      <div class="meal-time">${meal.time}</div>
+      <div class="meal-center">
+        <div class="meal-name">${meal.name}${meal.hero?'<span class="hero-badge">MAIN MEAL</span>':''}${meal.optional?'<span class="opt-badge">OPTIONAL</span>':''}</div>
+        <div class="meal-macros-inline">
+          <span class="macro-tag cal">${meal.cal} kcal</span>
+          <span class="macro-tag">P ${meal.protein}g</span>
+          <span class="macro-tag">C ${meal.carbs}g</span>
+          <span class="macro-tag">F ${meal.fat}g</span>
+        </div>
+      </div>
+      <div class="meal-toggle">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="2,4 7,10 12,4"/></svg>
+      </div>
+    </div>
+    <div class="meal-body">
+      <div class="meal-body-inner">
+        <div class="macro-bars">
+          <div><div class="bar-label"><span>PROTEIN</span><span>${meal.protein}g / ${pMax}g daily</span></div><div class="bar-track"><div class="bar-fill protein" data-w="${Math.round(meal.protein/pMax*100)}"></div></div></div>
+          <div><div class="bar-label"><span>CARBS</span><span>${meal.carbs}g / ${cMax}g daily</span></div><div class="bar-track"><div class="bar-fill carbs" data-w="${Math.round(meal.carbs/cMax*100)}"></div></div></div>
+          <div><div class="bar-label"><span>FAT</span><span>${meal.fat}g / ${fMax}g daily</span></div><div class="bar-track"><div class="bar-fill fat" data-w="${Math.round(meal.fat/fMax*100)}"></div></div></div>
+        </div>
+        <div class="food-section-label" style="margin-top:16px;">// FOOD OPTIONS</div>
+        <div class="food-categories">${cats}</div>
+        ${meal.note?`<div class="meal-note-bar">${meal.note}</div>`:''}
+      </div>
+    </div>`;
+  container.appendChild(el);
+});
+
+function animateBars(mealEl) {
+  if (!mealEl.classList.contains('open')) return;
+  setTimeout(() => {
+    mealEl.querySelectorAll('.bar-fill').forEach(bar => {
+      bar.style.width = bar.dataset.w + '%';
+    });
+  }, 80);
+}
+</script>
+</body>
+</html>
