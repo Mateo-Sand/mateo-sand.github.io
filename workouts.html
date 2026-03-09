@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Army Soldier Workout Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --olive: #4a5240;
+    --olive-dark: #2e3228;
+    --olive-light: #6b7560;
+    --khaki: #c9b882;
+    --khaki-light: #e8ddb5;
+    --sand: #f0e8c8;
+    --rust: #b85c2a;
+    --rust-light: #d4723a;
+    --cream: #f5f0e0;
+    --dark: #1a1c18;
+    --mid: #2e3228;
+    --text: #e8e4d4;
+    --text-dim: #a8a48a;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background-color: var(–dark);
+color: var(–text);
+font-family: ‘Barlow’, sans-serif;
+font-weight: 300;
+overflow-x: hidden;
+}
+
+/* NOISE TEXTURE OVERLAY */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 1000;
+opacity: 0.4;
+}
+
+/* HEADER */
+header {
+background: var(–olive-dark);
+border-bottom: 3px solid var(–khaki);
+padding: 0;
+position: relative;
+overflow: hidden;
+}
+
+header::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0; bottom: 0;
+background: repeating-linear-gradient(
+45deg,
+transparent,
+transparent 10px,
+rgba(74,82,64,0.3) 10px,
+rgba(74,82,64,0.3) 20px
+);
+}
+
+.header-inner {
+position: relative;
+z-index: 2;
+padding: 48px 40px 40px;
+max-width: 1100px;
+margin: 0 auto;
+}
+
+.header-badge {
+display: inline-block;
+background: var(–rust);
+color: var(–cream);
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 3px;
+text-transform: uppercase;
+padding: 4px 12px;
+margin-bottom: 16px;
+}
+
+header h1 {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(52px, 8vw, 96px);
+line-height: 0.9;
+color: var(–khaki);
+letter-spacing: 2px;
+margin-bottom: 8px;
+}
+
+header h1 span {
+display: block;
+color: var(–cream);
+font-size: clamp(36px, 5vw, 64px);
+}
+
+.header-sub {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 16px;
+letter-spacing: 2px;
+color: var(–text-dim);
+text-transform: uppercase;
+margin-top: 12px;
+}
+
+.header-stats {
+display: flex;
+gap: 32px;
+margin-top: 32px;
+flex-wrap: wrap;
+}
+
+.stat {
+border-left: 2px solid var(–rust);
+padding-left: 12px;
+}
+
+.stat-num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 32px;
+color: var(–khaki);
+line-height: 1;
+}
+
+.stat-label {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 11px;
+letter-spacing: 2px;
+color: var(–text-dim);
+text-transform: uppercase;
+}
+
+/* NAV */
+nav {
+background: var(–mid);
+border-bottom: 1px solid var(–olive);
+position: sticky;
+top: 0;
+z-index: 100;
+}
+
+.nav-inner {
+max-width: 1100px;
+margin: 0 auto;
+padding: 0 40px;
+display: flex;
+gap: 0;
+overflow-x: auto;
+scrollbar-width: none;
+}
+
+.nav-inner::-webkit-scrollbar { display: none; }
+
+nav a {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 12px;
+font-weight: 600;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–text-dim);
+text-decoration: none;
+padding: 14px 16px;
+white-space: nowrap;
+border-bottom: 2px solid transparent;
+transition: all 0.2s;
+}
+
+nav a:hover {
+color: var(–khaki);
+border-bottom-color: var(–rust);
+}
+
+/* MAIN */
+main {
+max-width: 1100px;
+margin: 0 auto;
+padding: 40px 40px 80px;
+}
+
+/* SECTION TITLES */
+.section-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 48px;
+color: var(–khaki);
+letter-spacing: 2px;
+margin-bottom: 4px;
+line-height: 1;
+}
+
+.section-divider {
+height: 2px;
+background: linear-gradient(to right, var(–rust), transparent);
+margin-bottom: 32px;
+margin-top: 8px;
+}
+
+/* DAY CARDS */
+.day-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 24px;
+margin-bottom: 60px;
+}
+
+@media (max-width: 768px) {
+.day-grid { grid-template-columns: 1fr; }
+main { padding: 24px 20px 60px; }
+.header-inner { padding: 32px 20px 28px; }
+.nav-inner { padding: 0 20px; }
+}
+
+.day-card {
+background: var(–mid);
+border: 1px solid var(–olive);
+border-top: 3px solid var(–rust);
+position: relative;
+overflow: hidden;
+transition: transform 0.2s, border-color 0.2s;
+}
+
+.day-card:hover {
+transform: translateY(-2px);
+border-color: var(–khaki);
+border-top-color: var(–khaki);
+}
+
+.day-card.full-width {
+grid-column: 1 / -1;
+}
+
+.day-header {
+padding: 20px 24px 16px;
+background: rgba(74,82,64,0.2);
+border-bottom: 1px solid var(–olive);
+display: flex;
+align-items: center;
+gap: 16px;
+cursor: pointer;
+user-select: none;
+}
+
+.day-number {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 42px;
+color: var(–rust);
+line-height: 1;
+min-width: 44px;
+}
+
+.day-info h3 {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 20px;
+font-weight: 700;
+letter-spacing: 1px;
+color: var(–cream);
+text-transform: uppercase;
+}
+
+.day-info p {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 12px;
+letter-spacing: 2px;
+color: var(–khaki);
+text-transform: uppercase;
+}
+
+.toggle-icon {
+margin-left: auto;
+font-size: 20px;
+color: var(–text-dim);
+transition: transform 0.3s;
+}
+
+.day-card.open .toggle-icon {
+transform: rotate(180deg);
+}
+
+.day-body {
+display: none;
+padding: 24px;
+}
+
+.day-card.open .day-body {
+display: block;
+animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(-8px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+/* BLOCKS */
+.block {
+margin-bottom: 24px;
+}
+
+.block-title {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 13px;
+font-weight: 700;
+letter-spacing: 3px;
+text-transform: uppercase;
+color: var(–rust-light);
+margin-bottom: 10px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.block-title::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–olive);
+}
+
+.block-why {
+font-size: 13px;
+color: var(–text-dim);
+font-style: italic;
+margin-top: 10px;
+padding: 8px 12px;
+border-left: 2px solid var(–olive-light);
+background: rgba(74,82,64,0.1);
+line-height: 1.5;
+}
+
+/* EXERCISE LIST */
+.exercise-list {
+list-style: none;
+}
+
+.exercise-list li {
+display: flex;
+align-items: baseline;
+gap: 10px;
+padding: 7px 0;
+border-bottom: 1px solid rgba(74,82,64,0.3);
+font-size: 14px;
+line-height: 1.4;
+}
+
+.exercise-list li:last-child { border-bottom: none; }
+
+.exercise-list li::before {
+content: ‘▸’;
+color: var(–rust);
+font-size: 10px;
+flex-shrink: 0;
+margin-top: 1px;
+}
+
+.ex-name {
+color: var(–cream);
+font-weight: 500;
+flex: 1;
+}
+
+.ex-sets {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 13px;
+letter-spacing: 1px;
+color: var(–khaki);
+white-space: nowrap;
+}
+
+/* RUCK TABLE */
+.ruck-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 14px;
+margin-top: 8px;
+}
+
+.ruck-table th {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 11px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–text-dim);
+text-align: left;
+padding: 8px 12px;
+border-bottom: 2px solid var(–olive);
+background: rgba(74,82,64,0.2);
+}
+
+.ruck-table td {
+padding: 9px 12px;
+border-bottom: 1px solid rgba(74,82,64,0.3);
+color: var(–text);
+}
+
+.ruck-table tr:last-child td { border-bottom: none; }
+
+.ruck-table td:first-child {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 13px;
+letter-spacing: 1px;
+color: var(–khaki);
+}
+
+.ruck-table tr:hover td { background: rgba(74,82,64,0.15); }
+
+/* SUPPLEMENTAL SECTIONS */
+.supp-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 24px;
+margin-bottom: 60px;
+}
+
+@media (max-width: 768px) {
+.supp-grid { grid-template-columns: 1fr; }
+}
+
+.supp-card {
+background: var(–mid);
+border: 1px solid var(–olive);
+padding: 28px;
+}
+
+.supp-card h3 {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 28px;
+color: var(–khaki);
+letter-spacing: 1px;
+margin-bottom: 16px;
+}
+
+.supp-card.full { grid-column: 1 / -1; }
+
+/* SUPPLEMENT LIST */
+.supp-list {
+list-style: none;
+}
+
+.supp-list li {
+padding: 10px 0;
+border-bottom: 1px solid rgba(74,82,64,0.3);
+font-size: 14px;
+line-height: 1.5;
+display: flex;
+gap: 10px;
+align-items: baseline;
+}
+
+.supp-list li:last-child { border-bottom: none; }
+
+.supp-name {
+color: var(–khaki);
+font-weight: 500;
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 15px;
+letter-spacing: 0.5px;
+white-space: nowrap;
+}
+
+.supp-dose {
+color: var(–text-dim);
+font-size: 13px;
+}
+
+/* PROGRESSION TABLE */
+.prog-list {
+list-style: none;
+}
+
+.prog-list li {
+padding: 10px 0 10px 16px;
+border-bottom: 1px solid rgba(74,82,64,0.3);
+font-size: 14px;
+line-height: 1.5;
+position: relative;
+}
+
+.prog-list li::before {
+content: ‘’;
+position: absolute;
+left: 0;
+top: 50%;
+transform: translateY(-50%);
+width: 4px;
+height: 4px;
+background: var(–rust);
+border-radius: 50%;
+}
+
+.prog-list li:last-child { border-bottom: none; }
+
+/* DAILY ROUTINE */
+.daily-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 12px;
+margin-top: 8px;
+}
+
+.daily-item {
+background: rgba(74,82,64,0.2);
+border: 1px solid var(–olive);
+padding: 14px 16px;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.daily-num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 28px;
+color: var(–rust);
+line-height: 1;
+min-width: 28px;
+}
+
+.daily-text {
+font-size: 13px;
+color: var(–text);
+line-height: 1.4;
+}
+
+/* TIPS */
+.tips-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+gap: 16px;
+margin-top: 8px;
+}
+
+.tip {
+background: rgba(184,92,42,0.1);
+border: 1px solid rgba(184,92,42,0.3);
+border-left: 3px solid var(–rust);
+padding: 16px;
+font-size: 14px;
+line-height: 1.5;
+color: var(–text);
+}
+
+.tip strong {
+display: block;
+color: var(–khaki);
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 13px;
+letter-spacing: 1px;
+text-transform: uppercase;
+margin-bottom: 4px;
+}
+
+/* SECTION SPACING */
+section { margin-bottom: 64px; }
+
+/* RUCK TIPS */
+.ruck-tips {
+list-style: none;
+margin-top: 12px;
+}
+
+.ruck-tips li {
+padding: 8px 0 8px 20px;
+border-bottom: 1px solid rgba(74,82,64,0.3);
+font-size: 14px;
+line-height: 1.5;
+position: relative;
+}
+
+.ruck-tips li::before {
+content: ‘→’;
+position: absolute;
+left: 0;
+color: var(–rust);
+font-size: 12px;
+}
+
+.ruck-tips li:last-child { border-bottom: none; }
+
+/* FOOTER */
+footer {
+background: var(–olive-dark);
+border-top: 2px solid var(–khaki);
+padding: 32px 40px;
+text-align: center;
+}
+
+footer p {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 13px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–text-dim);
+}
+
+footer strong {
+color: var(–khaki);
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 18px;
+letter-spacing: 2px;
+display: block;
+margin-bottom: 4px;
+}
+
+/* SCROLL TO TOP */
+.scroll-top {
+position: fixed;
+bottom: 32px;
+right: 32px;
+background: var(–rust);
+color: var(–cream);
+width: 44px;
+height: 44px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 18px;
+cursor: pointer;
+z-index: 200;
+opacity: 0;
+transition: opacity 0.3s;
+border: none;
+}
+
+.scroll-top.visible { opacity: 1; }
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-badge">🪖 Classified Training Program</div>
+    <h1>Army Soldier<span>Workout Plan</span></h1>
+    <p class="header-sub">Strength · Running · Mobility · Rucking</p>
+    <div class="header-stats">
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Days / Week</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Lift Days</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Run Days</div></div>
+      <div class="stat"><div class="stat-num">90</div><div class="stat-label">Day Transform</div></div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#schedule">Schedule</a>
+    <a href="#daily">Daily Routine</a>
+    <a href="#supplements">Supplements</a>
+    <a href="#nutrition">Nutrition</a>
+    <a href="#progression">Progression</a>
+    <a href="#tips">Key Tips</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- WEEKLY SCHEDULE -->
+
+  <section id="schedule">
+    <div class="section-title">Weekly Schedule</div>
+    <div class="section-divider"></div>
+
+```
+<div class="day-grid">
+
+  <!-- MONDAY -->
+  <div class="day-card" id="day1">
+    <div class="day-header" onclick="toggleDay('day1')">
+      <div class="day-number">01</div>
+      <div class="day-info">
+        <h3>Monday</h3>
+        <p>Lower Body Strength + Run</p>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="day-body">
+
+      <div class="block">
+        <div class="block-title">🔥 Warmup — 10 Min</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Easy jog or bike</span><span class="ex-sets">5 min</span></li>
+          <li><span class="ex-name">Leg Swings (front/back)</span><span class="ex-sets">10 each leg</span></li>
+          <li><span class="ex-name">Leg Swings (side to side)</span><span class="ex-sets">10 each leg</span></li>
+          <li><span class="ex-name">Hip Circles</span><span class="ex-sets">10 each direction</span></li>
+          <li><span class="ex-name">Bodyweight Squat (slow, full depth)</span><span class="ex-sets">2×10</span></li>
+          <li><span class="ex-name">Glute Bridges</span><span class="ex-sets">2×15</span></li>
+          <li><span class="ex-name">Lateral Band Walks</span><span class="ex-sets">2×15 each way</span></li>
+          <li><span class="ex-name">Ankle Circles</span><span class="ex-sets">10 each direction</span></li>
+          <li><span class="ex-name">Quad Pull (standing)</span><span class="ex-sets">30 sec each leg</span></li>
+        </ul>
+        <div class="block-why">Activates glutes, opens hips, warms knees and ankles before heavy squatting and running.</div>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🏃 Morning Run</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Steady run at moderate (conversational) pace</span><span class="ex-sets">3 miles</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🏋️ Lifting</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Back Squat</span><span class="ex-sets">4×6 @ 80% 1RM</span></li>
+          <li><span class="ex-name">Romanian Deadlift</span><span class="ex-sets">3×8</span></li>
+          <li><span class="ex-name">Leg Press</span><span class="ex-sets">3×10</span></li>
+          <li><span class="ex-name">Walking Lunges</span><span class="ex-sets">3×12 each leg</span></li>
+          <li><span class="ex-name">Calf Raises</span><span class="ex-sets">4×15</span></li>
+          <li><span class="ex-name">Plank</span><span class="ex-sets">3×60 sec</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🦵 Joint & Mobility Work — 10 Min Post-Lift</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">90/90 Hip Stretch</span><span class="ex-sets">2×60 sec each side</span></li>
+          <li><span class="ex-name">Knee CARs (Controlled Articular Rotations)</span><span class="ex-sets">2×10 each leg</span></li>
+          <li><span class="ex-name">Tibialis Raises (shin/ankle health)</span><span class="ex-sets">3×20</span></li>
+          <li><span class="ex-name">Ankle Circles</span><span class="ex-sets">2×15 each direction</span></li>
+          <li><span class="ex-name">Adductor Rockbacks</span><span class="ex-sets">2×10</span></li>
+        </ul>
+        <div class="block-why">Knees and hips take the brunt of squats, lunges, and rucking. These keep joint capsules healthy and reduce injury risk.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TUESDAY -->
+  <div class="day-card" id="day2">
+    <div class="day-header" onclick="toggleDay('day2')">
+      <div class="day-number">02</div>
+      <div class="day-info">
+        <h3>Tuesday</h3>
+        <p>Upper Body Strength — Push</p>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="day-body">
+
+      <div class="block">
+        <div class="block-title">🔥 Warmup — 10 Min</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Row, bike, or jump rope</span><span class="ex-sets">5 min</span></li>
+          <li><span class="ex-name">Arm Circles (small to large)</span><span class="ex-sets">10 each direction</span></li>
+          <li><span class="ex-name">Band Pull-Aparts</span><span class="ex-sets">2×20</span></li>
+          <li><span class="ex-name">Shoulder CARs</span><span class="ex-sets">2×8 each arm</span></li>
+          <li><span class="ex-name">Wall Slides</span><span class="ex-sets">2×12</span></li>
+          <li><span class="ex-name">Push-Up (slow tempo, 3 sec down)</span><span class="ex-sets">2×8</span></li>
+          <li><span class="ex-name">Scapular Push-Ups</span><span class="ex-sets">2×12</span></li>
+          <li><span class="ex-name">Thoracic Rotations (seated or kneeling)</span><span class="ex-sets">10 each side</span></li>
+          <li><span class="ex-name">Wrist Circles + Wrist Flexor Stretch</span><span class="ex-sets">30 sec each</span></li>
+        </ul>
+        <div class="block-why">Primes the rotator cuff, scapula stabilizers, and wrists before any pressing — the most common source of shoulder injuries.</div>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🏋️ Lifting</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Barbell Bench Press</span><span class="ex-sets">4×6 @ 80% 1RM</span></li>
+          <li><span class="ex-name">Overhead Press</span><span class="ex-sets">4×6</span></li>
+          <li><span class="ex-name">Incline Dumbbell Press</span><span class="ex-sets">3×10</span></li>
+          <li><span class="ex-name">Tricep Dips</span><span class="ex-sets">3×12</span></li>
+          <li><span class="ex-name">Lateral Raises</span><span class="ex-sets">3×15</span></li>
+          <li><span class="ex-name">Push-Ups</span><span class="ex-sets">3×max</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">💪 Joint & Mobility Work — 10 Min Post-Lift</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Band Pull-Aparts</span><span class="ex-sets">3×20</span></li>
+          <li><span class="ex-name">Wall Slides</span><span class="ex-sets">3×12</span></li>
+          <li><span class="ex-name">Shoulder CARs</span><span class="ex-sets">2×10 each arm</span></li>
+          <li><span class="ex-name">Wrist Circles + Wrist Push-Ups</span><span class="ex-sets">2×15</span></li>
+          <li><span class="ex-name">Doorway Pec Stretch</span><span class="ex-sets">2×45 sec</span></li>
+          <li><span class="ex-name">Thoracic Spine Rotations (on floor)</span><span class="ex-sets">2×10 each side</span></li>
+        </ul>
+        <div class="block-why">Shoulder injuries are extremely common in soldiers from carrying loads. These bulletproof your rotator cuff and thoracic mobility.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEDNESDAY -->
+  <div class="day-card" id="day3">
+    <div class="day-header" onclick="toggleDay('day3')">
+      <div class="day-number">03</div>
+      <div class="day-info">
+        <h3>Wednesday</h3>
+        <p>Interval Run + Hip & Knee Prehab</p>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="day-body">
+
+      <div class="block">
+        <div class="block-title">🔥 Warmup — 10 Min</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Easy jog</span><span class="ex-sets">5 min</span></li>
+          <li><span class="ex-name">High Knees</span><span class="ex-sets">2×20 sec</span></li>
+          <li><span class="ex-name">Butt Kicks</span><span class="ex-sets">2×20 sec</span></li>
+          <li><span class="ex-name">A-Skip</span><span class="ex-sets">2×20 meters</span></li>
+          <li><span class="ex-name">B-Skip</span><span class="ex-sets">2×20 meters</span></li>
+          <li><span class="ex-name">Carioca</span><span class="ex-sets">2×20m each direction</span></li>
+          <li><span class="ex-name">Leg Swings (front/back + lateral)</span><span class="ex-sets">10 each leg</span></li>
+          <li><span class="ex-name">Single-Leg Glute Bridges</span><span class="ex-sets">2×10 each side</span></li>
+          <li><span class="ex-name">Ankle Hops (small, quick)</span><span class="ex-sets">2×20 sec</span></li>
+        </ul>
+        <div class="block-why">Running warmups should be dynamic and movement-based. Skips and carioca groove proper running mechanics and get hips and ankles firing before intervals.</div>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🏃 Interval Run</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Warm-up jog</span><span class="ex-sets">1 mile</span></li>
+          <li><span class="ex-name">400m repeats at hard effort (90 sec rest between)</span><span class="ex-sets">6 reps</span></li>
+          <li><span class="ex-name">Cool-down jog</span><span class="ex-sets">1 mile</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🦵 Post-Run Prehab Circuit — 10 Min</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Clamshells with Band</span><span class="ex-sets">3×15 each side</span></li>
+          <li><span class="ex-name">Single-Leg Glute Bridges</span><span class="ex-sets">3×12 each side</span></li>
+          <li><span class="ex-name">Copenhagen Planks</span><span class="ex-sets">3×8 each side</span></li>
+          <li><span class="ex-name">Standing Hip Flexor March</span><span class="ex-sets">2×20</span></li>
+          <li><span class="ex-name">Eccentric Calf Drops (on step)</span><span class="ex-sets">3×15 each leg</span></li>
+        </ul>
+        <div class="block-why">Runners and ruckers are prone to IT band issues, runner's knee, and Achilles problems. This circuit targets weak links before they become injuries.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- THURSDAY -->
+  <div class="day-card" id="day4">
+    <div class="day-header" onclick="toggleDay('day4')">
+      <div class="day-number">04</div>
+      <div class="day-info">
+        <h3>Thursday</h3>
+        <p>Upper Body Strength — Pull + Neck & Spine</p>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="day-body">
+
+      <div class="block">
+        <div class="block-title">🔥 Warmup — 10 Min</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Row or jump rope</span><span class="ex-sets">5 min</span></li>
+          <li><span class="ex-name">Dead Hang from Bar (decompress spine)</span><span class="ex-sets">2×20 sec</span></li>
+          <li><span class="ex-name">Scapular Pull-Ups (retraction only, no arm bend)</span><span class="ex-sets">2×12</span></li>
+          <li><span class="ex-name">Band Pull-Aparts</span><span class="ex-sets">2×15</span></li>
+          <li><span class="ex-name">Face Pulls with Band</span><span class="ex-sets">2×15</span></li>
+          <li><span class="ex-name">Cat-Cow</span><span class="ex-sets">2×10</span></li>
+          <li><span class="ex-name">Thoracic Rotations</span><span class="ex-sets">10 each side</span></li>
+          <li><span class="ex-name">Neck Isometrics (light, front/back/sides)</span><span class="ex-sets">5 sec hold × 3 each</span></li>
+          <li><span class="ex-name">Hip Hinge Practice (bodyweight, slow)</span><span class="ex-sets">2×10</span></li>
+        </ul>
+        <div class="block-why">Pull days demand healthy shoulders, mobile thoracic spine, and prepared posterior chain. The dead hang alone is one of the best shoulder warmups in existence.</div>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🏋️ Lifting</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Deadlift</span><span class="ex-sets">4×5 @ 85% 1RM</span></li>
+          <li><span class="ex-name">Weighted Pull-Ups</span><span class="ex-sets">4×6</span></li>
+          <li><span class="ex-name">Barbell Rows</span><span class="ex-sets">4×8</span></li>
+          <li><span class="ex-name">Dumbbell Rows</span><span class="ex-sets">3×10</span></li>
+          <li><span class="ex-name">Face Pulls</span><span class="ex-sets">3×15</span></li>
+          <li><span class="ex-name">Barbell or Dumbbell Curls</span><span class="ex-sets">3×12</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🧠 Joint & Mobility — Neck & Spine Focus</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Neck CARs (slow, full range)</span><span class="ex-sets">2×5 each direction</span></li>
+          <li><span class="ex-name">Neck Isometrics (front, back, each side)</span><span class="ex-sets">3×10 sec holds</span></li>
+          <li><span class="ex-name">Cat-Cow</span><span class="ex-sets">2×15</span></li>
+          <li><span class="ex-name">Child's Pose with Lat Reach</span><span class="ex-sets">2×45 sec each side</span></li>
+          <li><span class="ex-name">Dead Hang from Pull-Up Bar</span><span class="ex-sets">3×30–45 sec</span></li>
+          <li><span class="ex-name">Thoracic Extension over Foam Roller</span><span class="ex-sets">2×60 sec</span></li>
+        </ul>
+        <div class="block-why">Rucking loads compress the spine and strain the neck and traps. Dead hangs decompress the spine. Neck work prevents strain from heavy pack straps.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FRIDAY -->
+  <div class="day-card full-width" id="day5">
+    <div class="day-header" onclick="toggleDay('day5')">
+      <div class="day-number">05</div>
+      <div class="day-info">
+        <h3>Friday</h3>
+        <p>Full Body Power + Rucking + Core</p>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="day-body">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;flex-wrap:wrap;">
+        <div>
+          <div class="block">
+            <div class="block-title">🔥 Warmup — 10 Min</div>
+            <ul class="exercise-list">
+              <li><span class="ex-name">Easy jog or row</span><span class="ex-sets">5 min</span></li>
+              <li><span class="ex-name">Jumping Jacks</span><span class="ex-sets">30 sec</span></li>
+              <li><span class="ex-name">Bodyweight Squat</span><span class="ex-sets">2×10</span></li>
+              <li><span class="ex-name">Inchworm Walk-Out with Push-Up</span><span class="ex-sets">2×6</span></li>
+              <li><span class="ex-name">Hip Circles</span><span class="ex-sets">10 each direction</span></li>
+              <li><span class="ex-name">Glute Bridges</span><span class="ex-sets">2×15</span></li>
+              <li><span class="ex-name">Power Clean Practice (empty bar/PVC)</span><span class="ex-sets">3 sets of 3</span></li>
+              <li><span class="ex-name">Box Jumps or Broad Jumps (easy effort)</span><span class="ex-sets">2×5</span></li>
+              <li><span class="ex-name">Wrist Mobility (circles + extensions)</span><span class="ex-sets">60 sec</span></li>
+            </ul>
+            <div class="block-why">Power days need full-body activation. Never load a power clean without first grooving the mechanics with an empty bar.</div>
+          </div>
+
+          <div class="block">
+            <div class="block-title">🏋️ Lifting</div>
+            <ul class="exercise-list">
+              <li><span class="ex-name">Power Cleans</span><span class="ex-sets">4×4</span></li>
+              <li><span class="ex-name">Front Squat</span><span class="ex-sets">3×6</span></li>
+              <li><span class="ex-name">Farmer's Carries</span><span class="ex-sets">4×40 meters</span></li>
+              <li><span class="ex-name">Push Press</span><span class="ex-sets">3×8</span></li>
+              <li><span class="ex-name">Weighted Sit-Ups</span><span class="ex-sets">4×20</span></li>
+              <li><span class="ex-name">Hanging Leg Raises</span><span class="ex-sets">3×15</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <div class="block">
+            <div class="block-title">🎒 Ruck Progression</div>
+            <table class="ruck-table">
+              <thead>
+                <tr>
+                  <th>Week</th>
+                  <th>Distance</th>
+                  <th>Weight</th>
+                  <th>Goal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1–2</td><td>2 miles</td><td>25 lbs</td><td>Build base</td></tr>
+                <tr><td>3–4</td><td>3 miles</td><td>30 lbs</td><td>Add distance</td></tr>
+                <tr><td>5–6</td><td>4 miles</td><td>35 lbs</td><td>Add weight</td></tr>
+                <tr><td>7–8</td><td>5 miles</td><td>40 lbs</td><td>Army standard</td></tr>
+                <tr><td>9+</td><td>6–8 miles</td><td>45–50 lbs</td><td>Elite level</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="block">
+            <div class="block-title">🎒 Ruck Form Tips</div>
+            <ul class="ruck-tips">
+              <li>Keep chest tall — do not hunch forward into the pack</li>
+              <li>Drive through the heel with each step</li>
+              <li>Brace your core throughout like you're taking a punch</li>
+              <li>Pack weight should ride high and close to your back</li>
+              <li>Use trekking poles on long rucks to protect the knees</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="block-title">🦶 Post-Ruck Recovery — 10 Min</div>
+            <ul class="exercise-list">
+              <li><span class="ex-name">Standing Quad Stretch</span><span class="ex-sets">60 sec each leg</span></li>
+              <li><span class="ex-name">Pigeon Pose</span><span class="ex-sets">60 sec each side</span></li>
+              <li><span class="ex-name">Standing Calf Stretch on Step</span><span class="ex-sets">45 sec each leg</span></li>
+              <li><span class="ex-name">Thoracic Foam Roll</span><span class="ex-sets">90 sec</span></li>
+              <li><span class="ex-name">Plantar Fascia Roll (tennis/lacrosse ball)</span><span class="ex-sets">60 sec each foot</span></li>
+            </ul>
+            <div class="block-why">Rucking hammers your feet, plantar fascia, calves, and lower back. This routine flushes out the damage before it accumulates.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SATURDAY -->
+  <div class="day-card" id="day6">
+    <div class="day-header" onclick="toggleDay('day6')">
+      <div class="day-number">06</div>
+      <div class="day-info">
+        <h3>Saturday</h3>
+        <p>Long Run + Full Body Mobility Flow</p>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="day-body">
+
+      <div class="block">
+        <div class="block-title">🔥 Warmup — 10 Min</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Walk progressing to easy jog</span><span class="ex-sets">5 min</span></li>
+          <li><span class="ex-name">World's Greatest Stretch (slow)</span><span class="ex-sets">3 each side</span></li>
+          <li><span class="ex-name">Leg Swings (front/back + lateral)</span><span class="ex-sets">10 each leg</span></li>
+          <li><span class="ex-name">Hip Circles</span><span class="ex-sets">10 each direction</span></li>
+          <li><span class="ex-name">High Knees</span><span class="ex-sets">20 sec</span></li>
+          <li><span class="ex-name">Butt Kicks</span><span class="ex-sets">20 sec</span></li>
+          <li><span class="ex-name">A-Skip</span><span class="ex-sets">2×15 meters</span></li>
+          <li><span class="ex-name">Ankle Bounces</span><span class="ex-sets">30 sec</span></li>
+        </ul>
+        <div class="block-why">Long run warmups should be gentle and gradual — ease the body into sustained, steady effort, not intensity.</div>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🏃 Long Run</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Easy steady-state run (60–70% max effort)</span><span class="ex-sets">5–8 miles</span></li>
+          <li><span class="ex-name">Every 3rd week: replace with 15 lb ruck</span><span class="ex-sets">4–5 miles</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🧘 Full Body Mobility Flow — 15 Min Post-Run</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">World's Greatest Stretch</span><span class="ex-sets">5 each side</span></li>
+          <li><span class="ex-name">Spiderman Lunge with Rotation</span><span class="ex-sets">5 each side</span></li>
+          <li><span class="ex-name">Deep Squat Hold</span><span class="ex-sets">2×60 sec</span></li>
+          <li><span class="ex-name">Lateral Lunge Hold</span><span class="ex-sets">2×30 sec each side</span></li>
+          <li><span class="ex-name">Jefferson Curl (light weight)</span><span class="ex-sets">3×8</span></li>
+          <li><span class="ex-name">Lying Glute Stretch</span><span class="ex-sets">60 sec each side</span></li>
+          <li><span class="ex-name">Inchworm Walk-Outs</span><span class="ex-sets">2×8</span></li>
+        </ul>
+        <div class="block-why">Saturday's flow targets every major joint and muscle after a long week. Think of it as resetting the body so Sunday's rest actually works.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SUNDAY -->
+  <div class="day-card" id="day7">
+    <div class="day-header" onclick="toggleDay('day7')">
+      <div class="day-number">07</div>
+      <div class="day-info">
+        <h3>Sunday</h3>
+        <p>Full Rest + Active Recovery</p>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="block">
+        <div class="block-title">🛌 Active Recovery</div>
+        <ul class="exercise-list">
+          <li><span class="ex-name">Easy walk</span><span class="ex-sets">20–30 min</span></li>
+          <li><span class="ex-name">Full body foam roll (quads, IT band, thoracic, lats, calves)</span><span class="ex-sets">Full body</span></li>
+          <li><span class="ex-name">Box breathing / diaphragmatic breathing (reduces cortisol)</span><span class="ex-sets">10 min</span></li>
+          <li><span class="ex-name">Epsom salt bath if possible</span><span class="ex-sets">20 min</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+```
+
+  </section>
+
+  <!-- DAILY MORNING ROUTINE -->
+
+  <section id="daily">
+    <div class="section-title">Daily Morning Routine</div>
+    <div class="section-divider"></div>
+    <p style="font-size:14px;color:var(--text-dim);margin-bottom:20px;">Do these every morning — takes under 5 minutes. Builds cumulative joint health over months.</p>
+    <div class="daily-grid">
+      <div class="daily-item"><div class="daily-num">1</div><div class="daily-text">Neck Rolls — 5 each direction</div></div>
+      <div class="daily-item"><div class="daily-num">2</div><div class="daily-text">Arm Circles — 10 each direction</div></div>
+      <div class="daily-item"><div class="daily-num">3</div><div class="daily-text">Hip Circles — 10 each direction</div></div>
+      <div class="daily-item"><div class="daily-num">4</div><div class="daily-text">Leg Swings — 10 each leg (front/back + side)</div></div>
+      <div class="daily-item"><div class="daily-num">5</div><div class="daily-text">Ankle ABCs — trace the alphabet with each foot</div></div>
+    </div>
+  </section>
+
+  <!-- SUPPLEMENTS -->
+
+  <section id="supplements">
+    <div class="section-title">Joint Supplement Stack</div>
+    <div class="section-divider"></div>
+    <div class="supp-card">
+      <ul class="supp-list">
+        <li><span class="supp-name">Creatine Monohydrate</span><span class="supp-dose">5g/day — strength and cellular hydration</span></li>
+        <li><span class="supp-name">Fish Oil / Omega-3s</span><span class="supp-dose">2–3g/day — reduces joint inflammation</span></li>
+        <li><span class="supp-name">Collagen Peptides + Vitamin C</span><span class="supp-dose">30–60 min pre-training — directly feeds connective tissue repair</span></li>
+        <li><span class="supp-name">Magnesium Glycinate</span><span class="supp-dose">300–400mg before bed — muscle recovery and sleep quality</span></li>
+        <li><span class="supp-name">Vitamin D3 + K2</span><span class="supp-dose">2,000–5,000 IU/day — bone density and immune health</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- NUTRITION -->
+
+  <section id="nutrition">
+    <div class="section-title">Nutrition Guidelines</div>
+    <div class="section-divider"></div>
+    <div class="supp-grid">
+      <div class="supp-card">
+        <h3>Macros</h3>
+        <ul class="supp-list">
+          <li><span class="supp-name">Protein</span><span class="supp-dose">1g per lb of bodyweight — chicken, eggs, beef, fish, Greek yogurt</span></li>
+          <li><span class="supp-name">Carbohydrates</span><span class="supp-dose">Fuel runs and rucks — oats, rice, potatoes, fruit</span></li>
+          <li><span class="supp-name">Fats</span><span class="supp-dose">Avocado, nuts, olive oil — joint and hormone support</span></li>
+        </ul>
+      </div>
+      <div class="supp-card">
+        <h3>Hydration & Recovery Foods</h3>
+        <ul class="supp-list">
+          <li><span class="supp-name">Water</span><span class="supp-dose">1 gallon minimum daily — more on ruck days</span></li>
+          <li><span class="supp-name">Bone Broth</span><span class="supp-dose">Regular intake for tendon and ligament health</span></li>
+          <li><span class="supp-name">Gelatin</span><span class="supp-dose">Eat regularly to support joint collagen production</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESSION -->
+
+  <section id="progression">
+    <div class="section-title">Progression Rules</div>
+    <div class="section-divider"></div>
+    <div class="supp-card">
+      <ul class="prog-list">
+        <li>Add <strong style="color:var(--khaki)">5 lbs</strong> to lower body lifts every week</li>
+        <li>Add <strong style="color:var(--khaki)">2.5 lbs</strong> to upper body lifts every week</li>
+        <li>Add <strong style="color:var(--khaki)">0.5 miles</strong> to your long run every 2 weeks</li>
+        <li>Follow the <strong style="color:var(--khaki)">ruck progression table</strong> on Friday — distance before weight</li>
+        <li><strong style="color:var(--rust-light)">Deload every 5th week</strong> — drop weight by 40%, keep all warmups and mobility work</li>
+        <li><strong style="color:var(--rust-light)">Track your lifts</strong> — progress only happens if you measure it</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- KEY TIPS -->
+
+  <section id="tips">
+    <div class="section-title">Key Reminders</div>
+    <div class="section-divider"></div>
+    <div class="tips-grid">
+      <div class="tip"><strong>Never Skip the Warmup</strong>Cold muscles and joints are how careers end. Every session, no exceptions.</div>
+      <div class="tip"><strong>Mobility is Training</strong>Treat it with the same seriousness as lifting. It's what keeps you in the game for years, not months.</div>
+      <div class="tip"><strong>Rucking is a Skill</strong>Form before weight, always. A bad ruck posture over miles destroys your knees and spine.</div>
+      <div class="tip"><strong>Sleep 7–9 Hours</strong>This is where actual adaptation happens. No sleep = no gains, no recovery, no performance.</div>
+      <div class="tip"><strong>Listen to Your Joints</strong>Sharp pain means stop immediately. Soreness means adapt. Know the difference.</div>
+      <div class="tip"><strong>Stay Consistent 90 Days</strong>This is when real transformation shows. Trust the process and execute every single day.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <strong>🪖 Stay Hard. Stay Ready.</strong>
+  <p>Army Soldier Workout Plan · Strength · Running · Mobility · Rucking</p>
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  function toggleDay(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+
+  // Show scroll top button
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('scrollTop');
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--khaki)' : '';
+      a.style.borderBottomColor = a.getAttribute('href') === '#' + current ? 'var(--rust)' : '';
+    });
+  });
+
+  // Auto-open Monday on load
+  toggleDay('day1');
+</script>
+
+</body>
+</html>
